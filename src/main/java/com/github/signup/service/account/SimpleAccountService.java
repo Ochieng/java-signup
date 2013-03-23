@@ -8,14 +8,18 @@ import com.github.signup.service.account.exception.AccountAlreadyExistsException
 import com.github.signup.service.account.exception.AccountNotFoundException;
 import com.github.signup.service.account.password.SecureRandomPasswordGenerator;
 import com.github.signup.service.account.validator.NotNullAccountValidator;
-import com.github.signup.service.email.NullEmailService;
+import com.github.signup.service.email.DoNothingEmailService;
 
 public class SimpleAccountService implements AccountService {
 
     private AccountValidator accountValidator = new NotNullAccountValidator();
     private AccountDAO accountDAO;
-    private EmailService emailService = new NullEmailService();
+    private EmailService emailService = new DoNothingEmailService();
     private PasswordService passwordGenerator = new SecureRandomPasswordGenerator();
+
+    public SimpleAccountService(AccountDAO accountDAO) {
+        this.accountDAO = accountDAO;
+    }
 
     @Override
     public void register(Account account) {

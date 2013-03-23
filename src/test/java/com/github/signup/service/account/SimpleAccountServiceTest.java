@@ -24,11 +24,8 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleAccountServiceTest {
 
-    public static final String JOHNY_EMAIL = "johny@mydomain.com";
-    public static final String JOHNY_PASSWORD = "secretpassword";
-
-    @InjectMocks
-    private SimpleAccountService accountService = new SimpleAccountService();
+    private static final String JOHNY_EMAIL = "johny@mydomain.com";
+    private static final String JOHNY_PASSWORD = "secretpassword";
 
     @Mock
     private AccountValidator accountValidator;
@@ -39,7 +36,10 @@ public class SimpleAccountServiceTest {
     @Mock
     private PasswordService passwordGenerator;
 
-    private Account account = new Account(JOHNY_EMAIL, JOHNY_PASSWORD);
+    @InjectMocks
+    private final SimpleAccountService accountService = new SimpleAccountService(accountDAO);
+
+    private final Account account = new Account(JOHNY_EMAIL, JOHNY_PASSWORD);
 
     @Before
     public void setup() {
@@ -80,10 +80,10 @@ public class SimpleAccountServiceTest {
         given(accountDAO.exists(JOHNY_EMAIL, JOHNY_PASSWORD)).willReturn(true);
 
         // when
-        boolean isLogggedIn = accountService.authenticate(JOHNY_EMAIL, JOHNY_PASSWORD);
+        boolean isLoggedIn = accountService.authenticate(JOHNY_EMAIL, JOHNY_PASSWORD);
 
         // then
-        assertTrue(isLogggedIn);
+        assertTrue(isLoggedIn);
     }
 
     @Test
@@ -92,10 +92,10 @@ public class SimpleAccountServiceTest {
         given(accountDAO.exists(JOHNY_EMAIL, JOHNY_PASSWORD)).willReturn(false);
 
         // when
-        boolean isLogggedIn = accountService.authenticate(JOHNY_EMAIL, JOHNY_PASSWORD);
+        boolean isLoggedIn = accountService.authenticate(JOHNY_EMAIL, JOHNY_PASSWORD);
 
         // then
-        assertFalse(isLogggedIn);
+        assertFalse(isLoggedIn);
     }
 
     @Test

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 public class SecureRandomPasswordGeneratorTest {
 
-    private SecureRandomPasswordGenerator passwordService = new SecureRandomPasswordGenerator();
+    private final SecureRandomPasswordGenerator passwordService = new SecureRandomPasswordGenerator();
 
     @Test
     public void testGenerate() throws Exception {
