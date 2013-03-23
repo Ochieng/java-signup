@@ -16,17 +16,17 @@ Module allows to execute basic operations on account to provide singup-panel in 
 ## User cases:
 [1] register new account
 ```
-validate--[OK]-->isExists--[not]-->addAccount-->sendWelcomeEmail
+validate--[OK]-->if exist--[not]-->addAccount-->sendWelcomeEmail
 ```
 
 [3] delete existing account
 ```
-isExists--[yes]-->removeAccount
+if exists--[yes]-->removeAccount
 ```
 
 [5] update account
 ```
-validate--[OK]-->isExists--[yes]-->updateAccount
+validate--[OK]-->if exists--[yes]-->updateAccount
 ```
 
 [6] reset password
@@ -34,7 +34,7 @@ validate--[OK]-->isExists--[yes]-->updateAccount
 User clicks forget password, email is generated, sent on the email with link to reset password. Reseting password trigger this point
 
 ```
-isExists--[yes]-->generateNewPassword->updateAccount->[7]sendemailWithNewPassword
+if exist--[yes]-->generateNewPassword->updateAccount->[7]sendemailWithNewPassword
 ```
 
 --
