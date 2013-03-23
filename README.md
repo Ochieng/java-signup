@@ -16,7 +16,7 @@ Module allows to execute basic operations on account to provide singup-panel in 
 ## User cases:
 [1] register new account
 ```
-validate--[OK]-->if exist--[not]-->addAccount-->sendWelcomeEmail
+validate--[OK]-->if exists--[not]-->addAccount-->sendWelcomeEmail
 ```
 
 [3] delete existing account
@@ -34,7 +34,7 @@ validate--[OK]-->if exists--[yes]-->updateAccount
 User clicks forget password, email is generated, sent on the email with link to reset password. Reseting password trigger this point
 
 ```
-if exist--[yes]-->generateNewPassword->updateAccount->[7]sendemailWithNewPassword
+if exists--[yes]-->generateNewPassword->updateAccount->[7]sendemailWithNewPassword
 ```
 
 --
