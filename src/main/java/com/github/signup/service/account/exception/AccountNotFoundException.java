@@ -1,4 +1,4 @@
-package com.signup.service.account.exception;
+package com.github.signup.service.account.exception;
 
 public class AccountNotFoundException extends AccountException {
 

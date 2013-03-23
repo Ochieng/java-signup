@@ -1,4 +1,4 @@
-package com.signup.service.account;
+package com.github.signup.service.account;
 
 public interface PasswordService {
 

@@ -1,6 +1,6 @@
-package com.signup.service;
+package com.github.signup.service;
 
-import com.signup.domain.Account;
+import com.github.signup.domain.Account;
 
 public interface AccountService {
 

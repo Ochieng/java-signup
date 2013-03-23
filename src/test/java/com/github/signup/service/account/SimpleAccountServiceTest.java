@@ -1,15 +1,12 @@
-package com.signup.service.account;
+package com.github.signup.service.account;
 
-import com.signup.domain.Account;
-import com.signup.domain.dao.AccountDAO;
-import com.signup.service.EmailService;
-import com.signup.service.account.AccountValidator;
-import com.signup.service.account.PasswordService;
-import com.signup.service.account.SimpleAccountService;
-import com.signup.service.account.exception.AccountAlreadyExistsException;
-import com.signup.service.account.exception.AccountException;
-import com.signup.service.account.exception.AccountNotFoundException;
-import com.signup.service.account.exception.AccountValidationException;
+import com.github.signup.domain.Account;
+import com.github.signup.domain.dao.AccountDAO;
+import com.github.signup.service.EmailService;
+import com.github.signup.service.account.exception.AccountAlreadyExistsException;
+import com.github.signup.service.account.exception.AccountException;
+import com.github.signup.service.account.exception.AccountNotFoundException;
+import com.github.signup.service.account.exception.AccountValidationException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

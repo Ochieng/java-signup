@@ -1,6 +1,6 @@
-package com.signup.domain.dao;
+package com.github.signup.domain.dao;
 
-import com.signup.domain.Account;
+import com.github.signup.domain.Account;
 
 public interface AccountDAO {
 

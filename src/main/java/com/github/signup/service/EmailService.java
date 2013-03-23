@@ -1,4 +1,4 @@
-package com.signup.service;
+package com.github.signup.service;
 
 public interface EmailService {
 

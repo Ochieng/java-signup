@@ -1,18 +1,21 @@
-package com.signup.service.account;
+package com.github.signup.service.account;
 
-import com.signup.domain.Account;
-import com.signup.domain.dao.AccountDAO;
-import com.signup.service.AccountService;
-import com.signup.service.EmailService;
-import com.signup.service.account.exception.AccountAlreadyExistsException;
-import com.signup.service.account.exception.AccountNotFoundException;
+import com.github.signup.domain.Account;
+import com.github.signup.domain.dao.AccountDAO;
+import com.github.signup.service.AccountService;
+import com.github.signup.service.EmailService;
+import com.github.signup.service.account.exception.AccountAlreadyExistsException;
+import com.github.signup.service.account.exception.AccountNotFoundException;
+import com.github.signup.service.account.password.SecureRandomPasswordGenerator;
+import com.github.signup.service.account.validator.NotNullAccountValidator;
+import com.github.signup.service.email.NullEmailService;
 
 public class SimpleAccountService implements AccountService {
 
-    private AccountValidator accountValidator;
+    private AccountValidator accountValidator = new NotNullAccountValidator();
     private AccountDAO accountDAO;
-    private EmailService emailService;
-    private PasswordService passwordService;
+    private EmailService emailService = new NullEmailService();
+    private PasswordService passwordGenerator = new SecureRandomPasswordGenerator();
 
     @Override
     public void register(Account account) {
@@ -68,7 +71,7 @@ public class SimpleAccountService implements AccountService {
         final Account account = accountDAO.load(username);
         validate(account);
 
-        final String newPassword = passwordService.generate();
+        final String newPassword = passwordGenerator.generate();
         account.setPassword(newPassword);
         accountDAO.update(account);
     }
@@ -79,5 +82,21 @@ public class SimpleAccountService implements AccountService {
         accountShouldExist(account.getUsername());
 
         accountDAO.update(account);
+    }
+
+    void setAccountValidator(AccountValidator accountValidator) {
+        this.accountValidator = accountValidator;
+    }
+
+    void setAccountDAO(AccountDAO accountDAO) {
+        this.accountDAO = accountDAO;
+    }
+
+    void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
+    void setPasswordGenerator(PasswordService passwordGenerator) {
+        this.passwordGenerator = passwordGenerator;
     }
 }

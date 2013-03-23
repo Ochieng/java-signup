@@ -1,4 +1,4 @@
-package com.signup.domain;
+package com.github.signup.domain;
 
 public class Account {
 
