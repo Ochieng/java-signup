@@ -1,6 +1,7 @@
-package com.signup.service.register;
+package com.signup.service.account;
 
 import com.signup.domain.Account;
+import com.signup.service.account.exception.AccountValidationException;
 
 public interface AccountValidator {
 

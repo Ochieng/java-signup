@@ -8,7 +8,7 @@ public interface AccountService {
 
     void delete(String username);
 
-    boolean login(Account account);
+    boolean authenticate(String username, String password);
 
     void resetPassword(String username);
 

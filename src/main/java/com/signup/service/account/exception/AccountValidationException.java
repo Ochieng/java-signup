@@ -1,4 +1,4 @@
-package com.signup.service.register;
+package com.signup.service.account.exception;
 
 public class AccountValidationException extends RuntimeException {
 }

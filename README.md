@@ -10,8 +10,7 @@ Module allows to execute basic operations on account to provide singup-panel in 
 4. authenticate
 5. update account
 6. reset password for the account
-7. send new password via email
-8. send custom email message
+7. send custom email message
 
 ## User cases:
 [1] register new account
@@ -34,7 +33,7 @@ validate--[OK]-->if exists--[yes]-->updateAccount
 User clicks forget password, email is generated, sent on the email with link to reset password. Reseting password trigger this point
 
 ```
-if exists--[yes]-->generateNewPassword->updateAccount->[7]sendemailWithNewPassword
+if exists--[yes]-->generateNewPassword->updateAccount
 ```
 
 --

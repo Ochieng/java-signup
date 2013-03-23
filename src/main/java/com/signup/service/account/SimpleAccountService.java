@@ -4,31 +4,31 @@ import com.signup.domain.Account;
 import com.signup.domain.dao.AccountDAO;
 import com.signup.service.AccountService;
 import com.signup.service.EmailService;
-import com.signup.service.account.exception.AccountExistsException;
+import com.signup.service.account.exception.AccountAlreadyExistsException;
 import com.signup.service.account.exception.AccountNotFoundException;
-import com.signup.service.register.AccountValidator;
 
 public class SimpleAccountService implements AccountService {
 
     private AccountValidator accountValidator;
     private AccountDAO accountDAO;
     private EmailService emailService;
+    private PasswordService passwordService;
 
     @Override
     public void register(Account account) {
         validate(account);
+        accountShouldNotExist(account.getUsername());
         addAccount(account);
         sendWelcomeEmail(account.getUsername(), "Welcome message");
     }
 
     private void validate(Account account) {
         accountValidator.validate(account);
-        accountShouldNotExist(account.getUsername());
     }
 
     private void accountShouldNotExist(String username) {
         if (accountDAO.exists(username)) {
-            throw new AccountExistsException(username);
+            throw new AccountAlreadyExistsException(username);
         }
     }
 
@@ -46,6 +46,7 @@ public class SimpleAccountService implements AccountService {
         removeAccount(username);
     }
 
+
     private void accountShouldExist(String username) {
         if (!accountDAO.exists(username)) {
             throw new AccountNotFoundException(username);
@@ -57,29 +58,26 @@ public class SimpleAccountService implements AccountService {
     }
 
     @Override
-    public boolean login(Account account) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public boolean authenticate(String username, String password) {
+        return accountDAO.exists(username, password);
     }
 
     @Override
     public void resetPassword(String username) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        accountShouldExist(username);
+        final Account account = accountDAO.load(username);
+        validate(account);
+
+        final String newPassword = passwordService.generate();
+        account.setPassword(newPassword);
+        accountDAO.update(account);
     }
 
     @Override
     public void update(Account account) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+        validate(account);
+        accountShouldExist(account.getUsername());
 
-    void setAccountValidator(AccountValidator accountValidator) {
-        this.accountValidator = accountValidator;
-    }
-
-    void setAccountDAO(AccountDAO accountDAO) {
-        this.accountDAO = accountDAO;
-    }
-
-    void setEmailService(EmailService emailService) {
-        this.emailService = emailService;
+        accountDAO.update(account);
     }
 }
