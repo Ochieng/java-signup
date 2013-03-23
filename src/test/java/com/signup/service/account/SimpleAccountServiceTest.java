@@ -1,7 +1,8 @@
-package com.signup.service;
+package com.signup.service.account;
 
 import com.signup.domain.Account;
 import com.signup.domain.dao.AccountDAO;
+import com.signup.service.EmailService;
 import com.signup.service.account.AccountValidator;
 import com.signup.service.account.PasswordService;
 import com.signup.service.account.SimpleAccountService;
