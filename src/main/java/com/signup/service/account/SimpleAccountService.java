@@ -1,8 +1,11 @@
-package com.signup.service;
+package com.signup.service.account;
 
 import com.signup.domain.Account;
 import com.signup.domain.dao.AccountDAO;
-import com.signup.service.register.AccountExistsException;
+import com.signup.service.AccountService;
+import com.signup.service.EmailService;
+import com.signup.service.account.exception.AccountExistsException;
+import com.signup.service.account.exception.AccountNotFoundException;
 import com.signup.service.register.AccountValidator;
 
 public class SimpleAccountService implements AccountService {
@@ -15,22 +18,22 @@ public class SimpleAccountService implements AccountService {
     public void register(Account account) {
         validate(account);
         addAccount(account);
-        sendWelcomeEmail(account, "Welcome message");
+        sendWelcomeEmail(account.getUsername(), "Welcome message");
     }
 
     private void validate(Account account) {
         accountValidator.validate(account);
-        verifyIfExist(account);
+        accountShouldNotExist(account.getUsername());
     }
 
-    private void verifyIfExist(Account account) {
-        if (accountDAO.exists(account)) {
-            throw new AccountExistsException(account.getUsername());
+    private void accountShouldNotExist(String username) {
+        if (accountDAO.exists(username)) {
+            throw new AccountExistsException(username);
         }
     }
 
-    private void sendWelcomeEmail(Account account, String s) {
-        emailService.send(account.getUsername(), s);
+    private void sendWelcomeEmail(String email, String s) {
+        emailService.send(email, s);
     }
 
     private void addAccount(Account account) {
@@ -39,8 +42,18 @@ public class SimpleAccountService implements AccountService {
 
     @Override
     public void delete(String username) {
-        verifyIfExist(new Account(username));
+        accountShouldExist(username);
+        removeAccount(username);
+    }
 
+    private void accountShouldExist(String username) {
+        if (!accountDAO.exists(username)) {
+            throw new AccountNotFoundException(username);
+        }
+    }
+
+    private void removeAccount(String username) {
+        accountDAO.remove(username);
     }
 
     @Override

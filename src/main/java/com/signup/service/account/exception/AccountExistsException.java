@@ -1,6 +1,7 @@
-package com.signup.service.register;
+package com.signup.service.account.exception;
 
-public class AccountExistsException extends RuntimeException {
+public class AccountExistsException extends AccountException {
+
     private final static String ACCOUNT_EXISTS_MESSAGE = "Operation forbidden for existing account: %s";
 
     private final String username;

@@ -2,6 +2,7 @@ package com.signup.service;
 
 import com.signup.domain.Account;
 import com.signup.domain.dao.AccountDAO;
+import com.signup.service.account.SimpleAccountService;
 import com.signup.service.register.AccountValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleAccountServiceTest {
 
+    public static final String JOHNY_EMAIL = "johny@mydomain.com";
     @InjectMocks
     private SimpleAccountService accountService = new SimpleAccountService();
 
@@ -28,7 +30,7 @@ public class SimpleAccountServiceTest {
     @Mock
     private EmailService emailService;
 
-    private Account account = new Account("Johny", "secretpassword");
+    private Account account = new Account(JOHNY_EMAIL, "secretpassword");
 
     @Test
     public void shouldRegisterAccount() {
@@ -39,8 +41,22 @@ public class SimpleAccountServiceTest {
 
         // then
         verify(accountValidator).validate(account);
-        verify(accountDAO).exists(account);
-        verify(emailService).send(eq(account.getUsername()), anyString());
+        verify(accountDAO).exists(JOHNY_EMAIL);
+        verify(emailService).send(eq(JOHNY_EMAIL), anyString());
         verify(accountDAO).add(account);
     }
+
+    @Test
+    public void shouldRemoveAccount() {
+        // given
+        given(accountDAO.exists(JOHNY_EMAIL)).willReturn(true);
+
+        // when
+        accountService.delete(JOHNY_EMAIL);
+
+        // then
+        verify(accountDAO).exists(JOHNY_EMAIL);
+        verify(accountDAO).remove(JOHNY_EMAIL);
+    }
+
 }
