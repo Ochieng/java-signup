@@ -2,7 +2,6 @@ singup
 ===========
 Module allows to execute basic operations on account to provide singup-panel on your application
 
-
 ==> Operations:
 1. register new account
 2. send welcome message via email
@@ -28,3 +27,4 @@ validate--[OK]-->isExists--[yes]-->updateAccount
 // Reseting password trigger this point
 isExists--[yes]-->generateNewPassword->updateAccount->[7]sendemailWithNewPassword
 
+--
